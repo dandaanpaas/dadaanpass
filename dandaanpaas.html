@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>دندادنپاس</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            text-align: center;
+        }
+        .button {
+            display: block;
+            margin: 10px auto;
+            padding: 15px 30px;
+            text-decoration: none;
+            color: black;
+            background-color: red; /* Example color */
+            border-radius: 5px;
+        }
+        #giftCodeButton {
+            background-color: #f44336; /* Example color */
+            cursor: pointer;
+        }
+        #giftCodeArea {
+            margin-top: 20px;
+            display: none; /* Initially hidden */
+        }
+        .error-message {
+            color: red;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>به دندادنپاس خوش امدید</h1>
+
+    <a href="https://www.instagram.com/dandaanpaas/" class="button">اینستاگرام</a>
+    <a href="https://t.me/dandaanpaas" class="button">تلگرام</a>
+    <button id="giftCodeButton" class="button">کد هدیه</button>
+
+    <div id="giftCodeArea">
+        <p>کد هدیه شما:</p>
+        <p id="giftCode"></p>
+    </div>
+
+    <p id="errorMessage" class="error-message" style="display: none;">برای دریافت کد هدیه لطفا اینستاگرام و تلگرام مارا فالو کنید</p>
+
+    <script>
+        const instagramLink = document.querySelector('a[href="https://www.instagram.com/dandaanpaas/"]');
+        const telegramLink = document.querySelector('a[href="https://t.me/dandaanpaas"]');
+        const giftCodeButton = document.getElementById('giftCodeButton');
+        const giftCodeArea = document.getElementById('giftCodeArea');
+        const giftCodeDisplay = document.getElementById('giftCode');
+        const errorMessage = document.getElementById('errorMessage');
+
+        giftCodeButton.addEventListener('click', function() {
+            // This part is tricky to implement reliably without backend logic.
+            // Client-side JavaScript cannot definitively check if a user has followed.
+
+            // A simplified (and not foolproof) approach could be to check if the user has *visited* the links recently.
+            // However, this is not a reliable way to ensure they followed.
+
+            // For a more robust solution, you would typically involve a backend server
+            // to track user actions (e.g., through a login system or by using browser cookies
+            // in a more sophisticated way, though cookie-based tracking has limitations).
+
+            // For this example, I'll show a basic client-side simulation that is NOT secure.
+
+            const followedInstagram = localStorage.getItem('followedInstagram');
+            const followedTelegram = localStorage.getItem('followedTelegram');
+
+            if (followedInstagram && followedTelegram) {
+                const code = generateGiftCode(); // Function to generate a random code
+                giftCodeDisplay.textContent = code;
+                giftCodeArea.style.display = 'block';
+                errorMessage.style.display = 'none';
+            } else {
+                giftCodeArea.style.display = 'none';
+                errorMessage.style.display = 'block';
+            }
+        });
+
+        instagramLink.addEventListener('click', function() {
+            localStorage.setItem('followedInstagram', 'true');
+        });
+
+        telegramLink.addEventListener('click', function() {
+            localStorage.setItem('followedTelegram', 'true');
+        });
+
+        function generateGiftCode() {
+            const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+            let code = '';
+            for (let i = 0; i < 8; i++) {
+                code += characters.charAt(Math.floor(Math.random() * characters.length));
+            }
+            return code;
+        }
+    </script>
+</body>
+</html>
